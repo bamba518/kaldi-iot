@@ -1,0 +1,10 @@
+<eps> 0
+<sil> 1
+an  2
+b 3
+ei  4
+i 5
+ing 6
+j 7
+n 8
+u 9

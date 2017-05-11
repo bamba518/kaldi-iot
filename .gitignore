@@ -1,0 +1,11 @@
+.vscode
+.DS_Store
+*.swp
+*.swap
+*.o
+*.a
+*.dSYM
+fst-copy
+exp
+utest
+assets/lexicon/processing
