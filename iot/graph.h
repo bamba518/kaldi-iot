@@ -61,7 +61,7 @@ struct Node {
     label(""),
     iarcs(offsetof(Arc, iarcs_link)),
     oarcs(offsetof(Arc, oarcs_link)),
-    hook(NULL)
+    aux(NULL)
   { }
 
   ~Node() { }
