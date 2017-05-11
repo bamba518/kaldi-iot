@@ -24,7 +24,8 @@ struct Arc {
   int32 ilabel;
   int32 olabel;
   float32 weight;
-  void *hook;  // no ownership
+
+  void *aux;
 
   Arc() :
     graph_arcs_link(),
@@ -37,7 +38,7 @@ struct Arc {
     ilabel(-1),
     olabel(-1),
     weight(0.0),
-    hook(NULL)
+    aux(NULL)
   { }
 
   ~Arc() { }
@@ -51,7 +52,8 @@ struct Node {
   
   List  iarcs;
   List  oarcs;
-  void *hook;  // no ownership
+
+  void *aux;
 
   Node() :
     graph_nodes_link(),
