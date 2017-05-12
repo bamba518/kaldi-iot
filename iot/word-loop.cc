@@ -124,7 +124,7 @@ int WordLoop::BuildAB() {
 
     std::string a(phone_set_->Id2Str(ab.first));
     std::string b(phone_set_->Id2Str(ab.second));
-    node->label = a + "," + b;
+    node->name = a + "," + b;
   }
   return 0;
 }
@@ -137,7 +137,7 @@ int WordLoop::BuildYZ() {
 
     std::string y(phone_set_->Id2Str(yz.first));
     std::string z(phone_set_->Id2Str(yz.second));
-    node->label = y + "," + z;
+    node->name = y + "," + z;
   }
   return 0;
 }
@@ -151,7 +151,7 @@ int WordLoop::BuildZA() {
 
       std::string z(phone_set_->Id2Str(za.first));
       std::string a(phone_set_->Id2Str(za.second));
-      node->label = z + "," + a;
+      node->name = z + "," + a;
     }
   }
   return 0;
@@ -170,9 +170,9 @@ int WordLoop::BuildHeadPhone() {
         if (a_hat == a) {
           Node *ab = AB_[PhonePair(a,b)];
           Arc *arc = graph_->AddArc(za, ab);
-          arc->label = std::string(phone_set_->Id2Str(z)) + "-" + 
-                       std::string(phone_set_->Id2Str(a)) + "+" +
-                       std::string(phone_set_->Id2Str(b));
+          arc->name = std::string(phone_set_->Id2Str(z)) + "-" + 
+                      std::string(phone_set_->Id2Str(a)) + "+" +
+                      std::string(phone_set_->Id2Str(b));
         }
       }
     }
@@ -193,9 +193,9 @@ int WordLoop::BuildTailPhone() {
         if (z_hat == z) {
           Node *yz = YZ_[PhonePair(y,z)];
           Arc *arc = graph_->AddArc(yz, za);
-          arc->label = std::string(phone_set_->Id2Str(y)) + "-" + 
-                       std::string(phone_set_->Id2Str(z)) + "+" +
-                       std::string(phone_set_->Id2Str(a));         
+          arc->name = std::string(phone_set_->Id2Str(y)) + "-" + 
+                      std::string(phone_set_->Id2Str(z)) + "+" +
+                      std::string(phone_set_->Id2Str(a));         
         }
       }
     }
@@ -225,15 +225,15 @@ int WordLoop::BuildMiddlePhones() {
       for (size_t k = 1; k != pron->NumPhones()-1; k++) {
         dst = graph_->AddNode();
         Arc *arc = graph_->AddArc(src, dst);
-        arc->label = std::string(phone_set_->Id2Str(pron->Phone(k-1))) + "-" + 
-                     std::string(phone_set_->Id2Str(pron->Phone(k))) + "+" +
-                     std::string(phone_set_->Id2Str(pron->Phone(k+1)));
+        arc->name = std::string(phone_set_->Id2Str(pron->Phone(k-1))) + "-" + 
+                    std::string(phone_set_->Id2Str(pron->Phone(k))) + "+" +
+                    std::string(phone_set_->Id2Str(pron->Phone(k+1)));
         src = dst;
       }
       dst = YZ_[yz];
       Arc *we_arc = graph_->AddArc(src, dst);
       we_arc->olabel = (WordId)i;
-      we_arc->label = std::string(vocab_->Id2Str(i));
+      we_arc->name = std::string(vocab_->Id2Str(i));
     }
   }
   return 0;

@@ -4,8 +4,8 @@ namespace kaldi {
 namespace iot {
 
 Graph::Graph() :
-  nodes_(offsetof(Node, graph_nodes_link)),
-  arcs_(offsetof(Arc, graph_arcs_link))
+  nodes_(offsetof(Node, nodes_link)),
+  arcs_(offsetof(Arc, arcs_link))
 { }
 
 Graph::~Graph() {
@@ -75,9 +75,9 @@ int Graph::WriteDot(FILE *fp) {
     "ranksep = \"0.4\";\n"
     "nodesep = \"0.25\";\n");
   for (Node *node = (Node*)nodes_.Head(); node != NULL; node = (Node*)nodes_.Next(node)) {
-    fprintf(fp, "%lu [label = \"%s\", fontsize = 14]\n", node->id, node->label.c_str());
+    fprintf(fp, "%lu [label = \"%s\", fontsize = 14]\n", node->id, node->name.c_str());
     for (Arc *arc = (Arc*)node->oarcs.Head(); arc != NULL; arc = (Arc*)node->oarcs.Next(arc)) {
-      fprintf(fp, "\t%lu -> %lu [label=\"%s\", fontsize = 14];\n", node->id, arc->dst->id, arc->label.c_str());
+      fprintf(fp, "\t%lu -> %lu [label=\"%s\", fontsize = 14];\n", node->id, arc->dst->id, arc->name.c_str());
     }
   }
   fprintf(fp, "}\n");

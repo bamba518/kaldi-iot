@@ -12,12 +12,12 @@ namespace iot {
 struct Node;
 
 struct Arc {
-  Link  graph_arcs_link;
-  Link  iarcs_link;
-  Link  oarcs_link;
+  Link  arcs_link;
+  Link  src_link;
+  Link  dst_link;
 
   size_t id;
-  std::string label;
+  std::string name;
 
   Node *src;
   Node *dst;
@@ -28,11 +28,11 @@ struct Arc {
   void *aux;
 
   Arc() :
-    graph_arcs_link(),
-    iarcs_link(),
-    oarcs_link(),
+    arcs_link(),
+    src_link(),
+    dst_link(),
     id(-1),
-    label(""),
+    name(""),
     src(NULL),
     dst(NULL),
     ilabel(-1),
@@ -45,10 +45,10 @@ struct Arc {
 };
 
 struct Node {
-  Link  graph_nodes_link;
+  Link  nodes_link;
 
   size_t id;
-  std::string label;
+  std::string name;
   
   List  iarcs;
   List  oarcs;
@@ -56,11 +56,11 @@ struct Node {
   void *aux;
 
   Node() :
-    graph_nodes_link(),
+    nodes_link(),
     id(-1),
-    label(""),
-    iarcs(offsetof(Arc, iarcs_link)),
-    oarcs(offsetof(Arc, oarcs_link)),
+    name(""),
+    iarcs(offsetof(Arc, dst_link)),
+    oarcs(offsetof(Arc, src_link)),
     aux(NULL)
   { }
 
@@ -78,11 +78,9 @@ public:
   int    DelNode(Node *node);
   Arc*   AddArc(Node *src, Node *dst);
   int    DelArc(Arc *arc);
-
   
   int    MarkNodeId();
   int    WriteDot(FILE *fp);
-  
 
 private:
   List nodes_;
