@@ -28,16 +28,9 @@ struct Arc {
   void *aux;
 
   Arc() :
-    arcs_link(),
-    src_link(),
-    dst_link(),
-    id(-1),
-    name(""),
-    src(NULL),
-    dst(NULL),
-    ilabel(-1),
-    olabel(-1),
-    weight(0.0),
+    arcs_link(), src_link(), dst_link(),
+    id(-1), name(""),
+    src(NULL), dst(NULL), ilabel(-1), olabel(-1), weight(0.0),
     aux(NULL)
   { }
 

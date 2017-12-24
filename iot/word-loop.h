@@ -1,6 +1,8 @@
 #ifndef KALDI_IOT_WORD_LOOP_H
 #define KALDI_IOT_WORD_LOOP_H
 
+#include <map>
+
 #include "iot/graph.h"
 #include "iot/vocab.h"
 #include "iot/lexicon.h"
