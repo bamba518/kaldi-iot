@@ -62,9 +62,9 @@ class WordLoop {
   std::vector<PhonePair> AB_set_;
   std::vector<PhonePair> YZ_set_;
 
-  std::map<PhonePair, Node*> YZ_;
-  std::map<PhonePair, Node*> ZA_;
-  std::map<PhonePair, Node*> AB_;
+  std::map<PhonePair, Node*> YZ_nodes_;
+  std::map<PhonePair, Node*> ZA_nodes_;
+  std::map<PhonePair, Node*> AB_nodes_;
   
 };
 

@@ -120,7 +120,7 @@ int WordLoop::BuildAB() {
   for (size_t i = 0; i != AB_set_.size(); i++) {
     PhonePair ab = AB_set_[i];
     Node *node = graph_->AddNode();
-    AB_[ab] = node;
+    AB_nodes_[ab] = node;
 
     std::string a(phone_set_->Id2Str(ab.first));
     std::string b(phone_set_->Id2Str(ab.second));
@@ -133,7 +133,7 @@ int WordLoop::BuildYZ() {
   for (size_t i = 0; i != YZ_set_.size(); i++) {
     PhonePair yz = YZ_set_[i];
     Node *node = graph_->AddNode();
-    YZ_[yz] = node;
+    YZ_nodes_[yz] = node;
 
     std::string y(phone_set_->Id2Str(yz.first));
     std::string z(phone_set_->Id2Str(yz.second));
@@ -147,7 +147,7 @@ int WordLoop::BuildZA() {
     for (size_t j = 0; j != A_set_.size(); j++) {
       PhonePair za(Z_set_[i], A_set_[j]);
       Node *node = graph_->AddNode();
-      ZA_[za] = node;
+      ZA_nodes_[za] = node;
 
       std::string z(phone_set_->Id2Str(za.first));
       std::string a(phone_set_->Id2Str(za.second));
@@ -163,12 +163,12 @@ int WordLoop::BuildHeadPhone() {
     PhoneId a = A_set_[ai];
     for (int zi = 0; zi != Z_set_.size(); zi++) {
       PhoneId z = Z_set_[zi];
-      Node *za = ZA_[PhonePair(z,a)];
+      Node *za = ZA_nodes_[PhonePair(z,a)];
       for (int i = 0; i != AB_set_.size(); i++) {
         PhoneId a_hat = AB_set_[i].first;
         PhoneId b = AB_set_[i].second;
         if (a_hat == a) {
-          Node *ab = AB_[PhonePair(a,b)];
+          Node *ab = AB_nodes_[PhonePair(a,b)];
           Arc *arc = graph_->AddArc(za, ab);
           arc->name = std::string(phone_set_->Id2Str(z)) + "-" + 
                       std::string(phone_set_->Id2Str(a)) + "+" +
@@ -186,12 +186,12 @@ int WordLoop::BuildTailPhone() {
     PhoneId z = Z_set_[zi];
     for (int ai = 0; ai != A_set_.size(); ai++) {
       PhoneId a = A_set_[ai];
-      Node *za = ZA_[PhonePair(z,a)];
+      Node *za = ZA_nodes_[PhonePair(z,a)];
       for (int i = 0; i != YZ_set_.size(); i++) {
         PhoneId y = YZ_set_[i].first;
         PhoneId z_hat = YZ_set_[i].second;
         if (z_hat == z) {
-          Node *yz = YZ_[PhonePair(y,z)];
+          Node *yz = YZ_nodes_[PhonePair(y,z)];
           Arc *arc = graph_->AddArc(yz, za);
           arc->name = std::string(phone_set_->Id2Str(y)) + "-" + 
                       std::string(phone_set_->Id2Str(z)) + "+" +
@@ -220,7 +220,7 @@ int WordLoop::BuildMiddlePhones() {
       PhoneId z = pron->Phone(pron->NumPhones() - 1);
       PhonePair ab(a,b);
       PhonePair yz(y,z);
-      Node *src = AB_[ab];
+      Node *src = AB_nodes_[ab];
       Node *dst = NULL;
       for (size_t k = 1; k != pron->NumPhones()-1; k++) {
         dst = graph_->AddNode();
@@ -230,7 +230,7 @@ int WordLoop::BuildMiddlePhones() {
                     std::string(phone_set_->Id2Str(pron->Phone(k+1)));
         src = dst;
       }
-      dst = YZ_[yz];
+      dst = YZ_nodes_[yz];
       Arc *we_arc = graph_->AddArc(src, dst);
       we_arc->olabel = (WordId)i;
       we_arc->name = std::string(vocab_->Id2Str(i));
